@@ -11,16 +11,20 @@
 // limitations under the License.
 
 // Structure patterned after OpenSimulator's YEngine which was
-// based on XMREngine from Mike Rieker (DreamNation), Melanie Thielker and meta7
-// but with several changes to be more cross platform.
-// filepath: /home/opensim/opensim-mb/OpenSim/Region/ScriptEngine/LuaBlue/LuaBlueEngine.cs
+// based on XMREngine from Mike Rieker (DreamNation), Melanie Thielker and meta7.
 
 using System;
 using System.Collections.Generic;
 
+using OpenSim.Framework;
 using OpenSim.Region.Framework.Interfaces;
 using OpenSim.Region.Framework.Scenes;
 using OpenSim.Region.ScriptEngine.Interfaces;
+using OpenSim.Region.ScriptEngine.Shared;
+using OpenSim.Region.ScriptEngine.Shared.Api;
+
+using OpenMetaverse;
+using OpenMetaverse.StructuredData;
 
 using log4net;
 using Mono.Addins;
@@ -37,12 +41,12 @@ namespace OpenSim.Region.ScriptEngine.LuaBlue
         private IConfigSource m_ConfigSource;
         private IConfig m_Config;
 
+    #region INonSharedRegionModule Members
+
         // INonSharedRegionModule.Name
         public string Name => "LuaBlue";
         // INonSharedRegionModule.ReplaceableInterface
         public Type ReplaceableInterface => null;
-
-        public string ScriptEngineName => "LuaBlue";
 
         // INonSharedRegionModule.Initialise
         public void Initialise(IConfigSource config)
@@ -67,6 +71,12 @@ namespace OpenSim.Region.ScriptEngine.LuaBlue
 
         }
 
+        // INonSharedRegionModule.Close
+        public void Close()
+        {
+            // Cleanup logic for LuaBlue engine
+        }
+
         // INonSharedRegionModule.AddRegion
         public void AddRegion(Scene scene)
         {
@@ -79,18 +89,17 @@ namespace OpenSim.Region.ScriptEngine.LuaBlue
             // Logic to remove LuaBlue engine from a region
         }
 
-        // INonSharedRegionModule.Close
-        public void Close()
-        {
-            // Cleanup logic for LuaBlue engine
-        }
-
         // INonShareRegionModule.RegionLoaded
         public void RegionLoaded(Scene scene)
         {
             // Logic to handle when the region is loaded
         }
+    #endregion
 
+    #region IScriptEngine Members
+        // IScriptEngine.Name
+        public string Name => "LuaBlue";
+        
         // IScriptEngine.OnScriptLoaded
         public void OnRezScript(uint localID, UUID itemID, string script, int startParam, bool postOnRez, string defEngine, int stateSource)
         {
@@ -101,5 +110,28 @@ namespace OpenSim.Region.ScriptEngine.LuaBlue
         {
             // Logic to queue event handlers for Lua scripts
         }
+    #endregion
+
+    #region IScriptModule Members
+
+        // IScriptModule.ScriptEngineName
+        public string ScriptEngineName => "LuaBlue";
+        string GetXMLState(UUID itemID);
+        bool SetXMLState(UUID itemID, string xml);
+
+        bool PostScriptEvent(UUID itemID, string name, Object[] args);
+        bool PostObjectEvent(UUID itemID, string name, Object[] args);
+        bool SuspendScript(UUID itemID);
+        bool ResumeScript(UUID itemID);
+        ArrayList GetScriptErrors(UUID itemID);
+        bool HasScript(UUID itemID, out bool running);
+        bool GetScriptState(UUID itemID);
+        void SaveAllState();
+        void StartProcessing();
+        float GetScriptExecutionTime(List<UUID> itemIDs);
+        Dictionary<uint, float> GetObjectScriptsExecutionTimes();
+        ICollection<ScriptTopStatsData> GetTopObjectStats(float mintime, int minmemory, out float totaltime, out float totalmemory);
+        int GetScriptsMemory(List<UUID> itemIDs);
+    #endregion
     }
 }

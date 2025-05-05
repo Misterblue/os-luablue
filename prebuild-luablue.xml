@@ -1,38 +1,37 @@
     <Project
-            name="LuaBlue"
-            path="addon-modules/os-luablue/ScriptEngine-LuaBlue/"
+            name="OpenSim.Region.ScriptEngine.LuaBlue"
+            path="addon-modules/os-luablue/OpenSim.Region.ScriptEngine/LuaBlue"
             type="Library">
 
       <Configuration name="Debug">
         <Options>
-          <OutputPath>../../../bin/</OutputPath>
+          <OutputPath>../../../../bin/</OutputPath>
           <AllowUnsafe>true</AllowUnsafe>
         </Options>
       </Configuration>
       <Configuration name="Release">
         <Options>
-          <OutputPath>../../../bin/</OutputPath>
+          <OutputPath>../../../../bin/</OutputPath>
           <AllowUnsafe>true</AllowUnsafe>
         </Options>
       </Configuration>
 
-      <ReferencePath>../../../bin/</ReferencePath>
+      <ReferencePath>../../../../bin/</ReferencePath>
       <Reference name="OpenSim.Framework"/>
-      <Reference name="OpenSim.Framework.Console"/>
-      <Reference name="OpenSim.Framework.Servers.HttpServer"/>
-      <Reference name="OpenSim.Services.Interfaces"/>
-      <Reference name="OpenSim.Services.Connectors"/>
+      <Reference name="OpenSim.Framework.Interfaces"/>
+      <Reference name="OpenSim.Framework.Scenes"/>
+      <Reference name="OpenSim.Region.Framework"/>
+      <Reference name="OpenSim.Region.ScriptEngine"/>
+      <Reference name="OpenSim.Region.ScriptEngine.Interfaces"/>
+      <Reference name="OpenSim.Region.ScriptEngine.Shared"/>
       <Reference name="OpenSim.Services.Base"/>
-      <Reference name="OpenSim.Server.Base"/>
-      <Reference name="OpenSim.Data"/>
+      <Reference name="OpenSim.Services.Interfaces"/>
 
       <Reference name="OpenMetaverse"/>
       <Reference name="OpenMetaverseTypes"/>
       <Reference name="OpenMetaverse.StructuredData"/>
 
-      <Reference name="WebRtcVoice"/>
-
-      <Reference name="Mono.Addins" path ="../../../bin"/>
+      <Reference name="Mono.Addins"/>
 
       <Reference name="Nini"/>
       <Reference name="log4net"/>
