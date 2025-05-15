@@ -11,7 +11,7 @@ to add [OpenSimulator] required features but that's what experimentation is for.
 
 The initial work will be to follow the pattern of OpenSimulator's YEngine and
 solve the problems of managing the script engine threads and figuring out how
-to link the "_API" libraries into the Lua compiler environment.
+to link the "_Api" libraries into the Lua compiler environment.
 
 A larger technical challange will be figuring out how to freeze and serialize
 the script state for crossing region boundries and saving scripts in the inventory
